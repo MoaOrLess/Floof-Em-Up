@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://1klgrywhmw5c"]
+
+[ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="1_16qsh"]
+[ext_resource type="Script" path="res://SCENES/enemy_mini_gloom.gd" id="1_kumcq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hj4py"]
+radius = 32.0
+height = 176.0
+
+[node name="Enemy_Mini Gloom" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_kumcq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -140)
+texture = ExtResource("1_16qsh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 26)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_hj4py")

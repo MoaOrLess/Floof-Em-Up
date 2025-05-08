@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bno0jfd42rtdf"
+path="res://.godot/imported/Bells, Handbell, Shop, Door, Ring SND6605 1.wav-c59b8a0e9ebd744b17925e2fea38e4e5.sample"
+
+[deps]
+
+source_file="res://SOUNDS/Bells, Handbell, Shop, Door, Ring SND6605 1.wav"
+dest_files=["res://.godot/imported/Bells, Handbell, Shop, Door, Ring SND6605 1.wav-c59b8a0e9ebd744b17925e2fea38e4e5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
