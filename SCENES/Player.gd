@@ -5,3 +5,4 @@ var speed: float = 150
 func _physics_process(delta):
 	velocity = Input.get_vector("left","right","up","down") * speed
 	move_and_collide(velocity * delta)
+	#move_and_slide()
