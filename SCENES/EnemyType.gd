@@ -1,5 +1,4 @@
-extends Node
-
+extends Resource
 class_name Enemy
 
 @export var title: String

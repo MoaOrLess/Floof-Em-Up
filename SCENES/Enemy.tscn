@@ -1,22 +1,22 @@
 [gd_scene load_steps=4 format=3 uid="uid://1klgrywhmw5c"]
 
-[ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="1_16qsh"]
-[ext_resource type="Script" path="res://SCENES/enemy_mini_gloom.gd" id="1_kumcq"]
+[ext_resource type="Script" path="res://SCENES/Enemy.gd" id="1_lk76x"]
+[ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="2_7j0bj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hj4py"]
 radius = 32.0
 height = 176.0
 
-[node name="Enemy_Mini Gloom" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D"]
 position = Vector2(5, -2)
 scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_kumcq")
+script = ExtResource("1_lk76x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -140)
-texture = ExtResource("1_16qsh")
+texture = ExtResource("2_7j0bj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 26)

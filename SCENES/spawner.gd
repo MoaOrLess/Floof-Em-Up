@@ -6,6 +6,9 @@ extends Node2D
 #Distance from player to spawn
 var distance: float = 400
 
+#to store an array of enemies
+@export var enemy_types: Array[Enemy]
+
 #Minute setter var will update the minute label
 var minute: int:
 	set(value):
@@ -23,6 +26,9 @@ var second: int:
 
 func spawn(pos:Vector2):
 	var enemy_instance = enemy.instantiate()
+	
+	#each minute a new enemy wave
+	enemy_instance.type = enemy_types[min(minute, enemy_types.size()-1)]
 	
 	enemy_instance.position = pos
 	enemy_instance.player_reference = player
