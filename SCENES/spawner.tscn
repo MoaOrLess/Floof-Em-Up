@@ -1,15 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://b14q0uljhdj4j"]
+[gd_scene load_steps=9 format=3 uid="uid://b14q0uljhdj4j"]
 
 [ext_resource type="Script" path="res://SCENES/spawner.gd" id="1_dsdxp"]
 [ext_resource type="PackedScene" uid="uid://1klgrywhmw5c" path="res://SCENES/Enemy.tscn" id="2_2c1oa"]
 [ext_resource type="Resource" uid="uid://yyc3o2ok8bl3" path="res://RESOURCES/Gloom Mini.tres" id="3_g3lh6"]
+[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="3_ynim2"]
 [ext_resource type="Resource" uid="uid://ctrkhohcw8t05" path="res://RESOURCES/Gloom Mid.tres" id="4_yajf0"]
 [ext_resource type="Resource" uid="uid://sm6bdpumi4m3" path="res://RESOURCES/Gloom Mid Para.tres" id="5_17363"]
+[ext_resource type="Resource" uid="uid://qw8vbhc2h22l" path="res://RESOURCES/Floof Para.tres" id="6_d8s8s"]
+[ext_resource type="Resource" uid="uid://ekffj3cya5o4" path="res://RESOURCES/Floof Evil.tres" id="7_r4i1m"]
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_dsdxp")
 enemy = ExtResource("2_2c1oa")
-enemy_types = Array[Resource]([ExtResource("3_g3lh6"), ExtResource("4_yajf0"), ExtResource("5_17363")])
+enemy_types = Array[ExtResource("3_ynim2")]([ExtResource("3_g3lh6"), ExtResource("4_yajf0"), ExtResource("5_17363"), ExtResource("7_r4i1m"), ExtResource("6_d8s8s")])
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -45,3 +48,4 @@ wait_time = 9.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Pattern" to="." method="_on_pattern_timeout"]

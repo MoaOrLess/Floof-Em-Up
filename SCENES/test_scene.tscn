@@ -9,4 +9,3 @@
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_jcmrv")]
-position = Vector2(951, 576)
