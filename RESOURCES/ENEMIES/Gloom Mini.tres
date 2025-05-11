@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://yyc3o2ok8bl3"]
 
-[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_lik0g"]
-[ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="2_0cpo3"]
+[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_mhxiw"]
+[ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="2_u74b4"]
 
 [resource]
-script = ExtResource("1_lik0g")
+script = ExtResource("1_mhxiw")
 title = "Gloom Mini"
-texture = ExtResource("2_0cpo3")
-health = 0.0
+texture = ExtResource("2_u74b4")
+health = 1.0
 damage = 1.0

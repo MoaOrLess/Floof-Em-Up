@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://ekffj3cya5o4"]
 
-[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_sch3v"]
-[ext_resource type="Texture2D" uid="uid://cwgjq24k4css8" path="res://ART/Evil Floof.png" id="2_qmash"]
+[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_ln8cy"]
+[ext_resource type="Texture2D" uid="uid://cwgjq24k4css8" path="res://ART/Evil Floof.png" id="2_52uni"]
 
 [resource]
-script = ExtResource("1_sch3v")
+script = ExtResource("1_ln8cy")
 title = "Floof Evil"
-texture = ExtResource("2_qmash")
-health = 0.0
+texture = ExtResource("2_52uni")
+health = 5.0
 damage = 5.0

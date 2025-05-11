@@ -28,6 +28,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAA
 tile_set = SubResource("TileSet_7atwp")
 
 [node name="Spawner" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_46yy0")]
+y_sort_enabled = true
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_jcmrv")]

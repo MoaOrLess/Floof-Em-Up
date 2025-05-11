@@ -8,6 +8,12 @@ var damage: float
 var knockback: Vector2
 var separation: float
 
+var health: float:
+	set(value):
+		health = value
+		if health <= 0:
+			queue_free()
+
 var elite:bool = false:
 	set(value):
 		elite = value
@@ -29,7 +35,8 @@ func _physics_process(delta):
 
 
 func check_separation(_delta):
-	var separation = (player_reference.position - position).length()
+	var separation = (player_reference.position - 
+	position).length()
 	if separation >= 2000 and not elite:
 		queue_free()
 	
@@ -56,8 +63,12 @@ func enemy_facing():
 func damage_popup(amount):
 	var popup = damage_popup_node.instantiate()
 	popup.text = str(amount)
-	popup.position = position + Vector2 (-50, -125)
+	popup.position = position + Vector2 (-50, -100)
 	get_tree().current_scene.add_child(popup)
 
 func take_damage(amount):
+	var tween = get_tree().create_tween()
+	tween.tween_property($Sprite2D, "modulate", Color(1.5,0.25,1,1), 0.2)
+	tween.tween_property($Sprite2D, "modulate", Color(1,1,1), 0.2)
 	damage_popup(amount)
+	health -= amount

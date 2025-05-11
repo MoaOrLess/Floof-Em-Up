@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://sm6bdpumi4m3"]
 
-[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_5m2k7"]
-[ext_resource type="Texture2D" uid="uid://c4nmp6wjbagig" path="res://ART/Mid_Gloom_2.png" id="2_x3np3"]
+[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_0xeky"]
+[ext_resource type="Texture2D" uid="uid://c4nmp6wjbagig" path="res://ART/Mid_Gloom_2.png" id="2_n0dxf"]
 
 [resource]
-script = ExtResource("1_5m2k7")
+script = ExtResource("1_0xeky")
 title = "Gloom Mid Para"
-texture = ExtResource("2_x3np3")
-health = 0.0
+texture = ExtResource("2_n0dxf")
+health = 5.0
 damage = 5.0

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://ctrkhohcw8t05"]
 
-[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_u0dbl"]
-[ext_resource type="Texture2D" uid="uid://b2qrfsv0b4qo2" path="res://ART/Mid_Gloom_1.png" id="2_b40jg"]
+[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_i3nir"]
+[ext_resource type="Texture2D" uid="uid://b2qrfsv0b4qo2" path="res://ART/Mid_Gloom_1.png" id="2_gjhdo"]
 
 [resource]
-script = ExtResource("1_u0dbl")
+script = ExtResource("1_i3nir")
 title = "Gloom Mid"
-texture = ExtResource("2_b40jg")
-health = 0.0
+texture = ExtResource("2_gjhdo")
+health = 4.0
 damage = 4.0

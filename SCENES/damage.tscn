@@ -1,14 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnnjfjdwtd32i"]
+[gd_scene load_steps=3 format=3 uid="uid://bnnjfjdwtd32i"]
 
 [ext_resource type="Script" path="res://damage.gd" id="1_owin6"]
+[ext_resource type="FontFile" uid="uid://bolsjlnbbmd3l" path="res://FONTS/FranxurterTotallyFat-X3G4Z.ttf" id="1_xl7fb"]
 
 [node name="Damage" type="Label"]
 offset_left = -50.0
-offset_top = -12.0
+offset_top = -25.0
 offset_right = 50.0
-offset_bottom = 12.0
-pivot_offset = Vector2(50, 12)
-text = "0"
+offset_bottom = 25.0
+pivot_offset = Vector2(50, 25)
+theme_override_colors/font_color = Color(0.943917, 0.722946, 0.309323, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.352941)
+theme_override_colors/font_outline_color = Color(0.803922, 0.313726, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xl7fb")
+theme_override_font_sizes/font_size = 50
+text = "50"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_owin6")

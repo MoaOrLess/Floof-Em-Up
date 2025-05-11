@@ -56,11 +56,11 @@ func amount(number: int = 1):
 
 func _on_timer_timeout() -> void:
 	second += 1
-	amount(second % 10)
+	amount(second % 1)
 
 
 func _on_pattern_timeout() -> void:
-	for i in range(75):
+	for i in range(15):
 		spawn(get_random_position())
 
 

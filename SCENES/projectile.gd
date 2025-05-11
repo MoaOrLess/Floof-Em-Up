@@ -11,6 +11,7 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
+		body.knockback = direction * 100
 
 
 func _on_screen_exited() -> void:
