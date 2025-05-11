@@ -11,4 +11,5 @@ texture = ExtResource("3_76kqc")
 damage = 1.0
 cooldown = 1.0
 speed = 400.0
+weapon_health = 1.0
 projectile_node = ExtResource("1_c1nf6")

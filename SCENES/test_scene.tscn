@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://c4whmuykle3ny"]
+[gd_scene load_steps=8 format=4 uid="uid://c4whmuykle3ny"]
 
 [ext_resource type="Texture2D" uid="uid://w5jo1dfai4dn" path="res://ART/Ground_Grass_1.png" id="1_4ddy1"]
+[ext_resource type="Script" path="res://SCENES/test_scene.gd" id="1_7qm2r"]
 [ext_resource type="PackedScene" uid="uid://b14q0uljhdj4j" path="res://SCENES/spawner.tscn" id="1_46yy0"]
 [ext_resource type="PackedScene" uid="uid://c7a3g5iw3x7m1" path="res://SCENES/Player.tscn" id="1_jcmrv"]
+[ext_resource type="AudioStream" uid="uid://bovcl1bgmf78f" path="res://SOUNDS/Mourn the Morn.mp3" id="5_4bnh7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u3mph"]
 texture = ExtResource("1_4ddy1")
@@ -16,7 +18,10 @@ texture_region_size = Vector2i(500, 500)
 tile_size = Vector2i(500, 500)
 sources/0 = SubResource("TileSetAtlasSource_u3mph")
 
-[node name="Test Scene" type="Node2D"]
+[node name="Test Scene" type="Node2D" node_paths=PackedStringArray("player_reference")]
+y_sort_enabled = true
+script = ExtResource("1_7qm2r")
+player_reference = NodePath("Player")
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 repeat_size = Vector2(3000, 2000)
@@ -28,7 +33,12 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAA
 tile_set = SubResource("TileSet_7atwp")
 
 [node name="Spawner" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_46yy0")]
-y_sort_enabled = true
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_jcmrv")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+scale = Vector2(2, 2)
+stream = ExtResource("5_4bnh7")
+volume_db = -20.0
+autoplay = true

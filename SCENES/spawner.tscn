@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://ekffj3cya5o4" path="res://RESOURCES/ENEMIES/Floof Evil.tres" id="7_r4i1m"]
 
 [node name="Spawner" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_dsdxp")
 enemy = ExtResource("2_2c1oa")
 enemy_types = Array[ExtResource("3_ynim2")]([ExtResource("3_g3lh6"), ExtResource("4_yajf0"), ExtResource("5_17363"), ExtResource("7_r4i1m"), ExtResource("6_d8s8s")])

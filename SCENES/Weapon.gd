@@ -7,6 +7,8 @@ class_name Weapon
 @export var damage: float
 @export var cooldown: float
 @export var speed: float
+@export var weapon_health: float
+
 
 @export var projectile_node: PackedScene = preload("res://SCENES/projectile.tscn")
 
