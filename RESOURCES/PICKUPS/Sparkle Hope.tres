@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Gem" load_steps=3 format=3 uid="uid://xyi7q4lmciy0"]
+
+[ext_resource type="Texture2D" uid="uid://jsej3ek4riad" path="res://ART/Twinkel_1.png" id="1_j5f5x"]
+[ext_resource type="Script" path="res://SCENES/Gem.gd" id="2_tt5m3"]
+
+[resource]
+script = ExtResource("2_tt5m3")
+XP = 5.0
+title = "Sparkle Hope"
+icon = ExtResource("1_j5f5x")
+description = "Gain XP"

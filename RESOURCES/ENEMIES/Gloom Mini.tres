@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://yyc3o2ok8bl3"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=5 format=3 uid="uid://yyc3o2ok8bl3"]
 
+[ext_resource type="Script" path="res://RESOURCES/PickupResource.gd" id="1_eefdv"]
 [ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_mhxiw"]
+[ext_resource type="Resource" uid="uid://bjkvpvq0roko3" path="res://RESOURCES/PICKUPS/Glimmer Hope.tres" id="2_asp6t"]
 [ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="2_u74b4"]
 
 [resource]
@@ -9,3 +11,4 @@ title = "Gloom Mini"
 texture = ExtResource("2_u74b4")
 health = 1.0
 damage = 1.0
+drops = Array[ExtResource("1_eefdv")]([ExtResource("2_asp6t")])

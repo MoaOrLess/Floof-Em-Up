@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2ic6cuw5svmb" path="res://ART/Attacks/Bubble_attack.png" id="2_hdu58"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_57k5r"]
-radius = 63.0079
+radius = 22.0
 
 [node name="Projectile" type="Area2D"]
 collision_layer = 0

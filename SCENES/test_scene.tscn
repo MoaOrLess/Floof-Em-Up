@@ -36,6 +36,7 @@ tile_set = SubResource("TileSet_7atwp")
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_jcmrv")]
+position = Vector2(958, 599)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
 scale = Vector2(2, 2)
