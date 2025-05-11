@@ -1,9 +1,19 @@
 extends CharacterBody2D
 
 @export var player_reference: CharacterBody2D
+var damage_popup_node = preload("res://SCENES/damage.tscn")
 var direction: Vector2
 var speed: float = 75
 var damage: float
+var knockback: Vector2
+var separation: float
+
+var elite:bool = false:
+	set(value):
+		elite = value
+		if value:
+			$Sprite2D.material = load("res://SHADERS/rainbow_border.tres")
+			scale = Vector2(0.75,0.75)
 
 var type: Enemy:
 	set(value):
@@ -13,5 +23,41 @@ var type: Enemy:
 
 
 func _physics_process(delta):
-	velocity = (player_reference.position - position).normalized()*speed
-	move_and_collide(velocity*delta)
+	check_separation(delta)
+	knockback_update(delta)
+	enemy_facing()
+
+
+func check_separation(_delta):
+	var separation = (player_reference.position - position).length()
+	if separation >= 2000 and not elite:
+		queue_free()
+	
+	if separation < player_reference.nearest_enemy_distance:
+		player_reference.nearest_enemy = self
+	print(separation)
+	
+
+func  knockback_update(delta):
+	velocity = (player_reference.position - position).normalized() * speed
+	knockback = knockback.move_toward(Vector2.ZERO, 1)
+	velocity += knockback
+	var collider = move_and_collide(velocity * delta)
+	#print(collider)
+	if collider:
+		collider.get_collider().knockback = (collider.get_collider().global_position - global_position).normalized() * 50
+
+func enemy_facing():
+	if velocity.x < 0:
+		$Sprite2D.flip_h = false
+	elif velocity.x > 0:
+		$Sprite2D.flip_h = true
+
+func damage_popup(amount):
+	var popup = damage_popup_node.instantiate()
+	popup.text = str(amount)
+	popup.position = position + Vector2 (-50, -125)
+	get_tree().current_scene.add_child(popup)
+
+func take_damage(amount):
+	damage_popup(amount)

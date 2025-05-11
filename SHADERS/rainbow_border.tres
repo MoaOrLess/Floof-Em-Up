@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d2c8vyq1lnhub"]
+
+[ext_resource type="Shader" path="res://SHADERS/enemy_border.gdshader" id="1_i3uo2"]
+
+[resource]
+shader = ExtResource("1_i3uo2")
+shader_parameter/line_thickness = 10.0
+shader_parameter/sin_frequency = 0.5
+shader_parameter/sin_offset = 0.0
+shader_parameter/light_offset = 0.5

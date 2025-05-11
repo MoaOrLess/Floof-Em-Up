@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7a3g5iw3x7m1"]
+[gd_scene load_steps=9 format=3 uid="uid://c7a3g5iw3x7m1"]
 
 [ext_resource type="Script" path="res://SCENES/Player.gd" id="1_52m1h"]
 [ext_resource type="Texture2D" uid="uid://by0ewwgmpq6bg" path="res://ART/Floof_Art/Floof_Front0000.png" id="1_erxhr"]
+[ext_resource type="PackedScene" uid="uid://cg76nmvqutokr" path="res://SCENES/slot.tscn" id="2_yvjjm"]
+[ext_resource type="Resource" uid="uid://cwf5eujiksef2" path="res://RESOURCES/WEAPONS/Bubble Magic.tres" id="3_brbr8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gaqx2"]
 radius = 69.0
@@ -11,9 +13,53 @@ height = 356.0
 radius = 86.0
 height = 392.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rr5n"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.427451)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ny4g"]
+bg_color = Color(0.717647, 0.117647, 0.117647, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.6, 0.0117647, 0.188235, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_52m1h")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Weapons" type="HBoxContainer" parent="UI"]
+z_index = 1
+anchors_preset = -1
+anchor_top = -0.006
+offset_left = -882.0
+offset_top = -447.52
+offset_right = -574.0
+offset_bottom = -354.0
+
+[node name="Slot" parent="UI/Weapons" instance=ExtResource("2_yvjjm")]
+z_index = 1
+layout_mode = 2
+weapon = ExtResource("3_brbr8")
+
+[node name="Slot2" parent="UI/Weapons" instance=ExtResource("2_yvjjm")]
+z_index = 1
+layout_mode = 2
+
+[node name="Slot3" parent="UI/Weapons" instance=ExtResource("2_yvjjm")]
+z_index = 1
+layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -132)
@@ -35,12 +81,18 @@ shape = SubResource("CapsuleShape2D_0kj3d")
 
 [node name="Health" type="ProgressBar" parent="."]
 unique_name_in_owner = true
-offset_left = -542.0
-offset_top = -498.0
-offset_right = 544.0
-offset_bottom = -462.0
+z_index = 1
+offset_left = -1776.0
+offset_top = -1028.0
+offset_right = -1156.0
+offset_bottom = -951.0
+theme_override_styles/background = SubResource("StyleBoxFlat_2rr5n")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3ny4g")
+value = 100.0
+show_percentage = false
 
 [node name="Timer" type="Timer" parent="."]
+autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -120)
