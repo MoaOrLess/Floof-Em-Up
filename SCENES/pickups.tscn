@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bkvxv7mba20xd"]
 
-[ext_resource type="Script" path="res://SCENES/pickups.gd" id="1_iok5p"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/pickups.gd" id="1_iok5p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y4chw"]
 

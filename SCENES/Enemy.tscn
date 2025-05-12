@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://1klgrywhmw5c"]
 
-[ext_resource type="Script" path="res://SCENES/Enemy.gd" id="1_lk76x"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/Enemy.gd" id="1_lk76x"]
 [ext_resource type="Texture2D" uid="uid://ciacnpeevqqta" path="res://ART/Small_Gloom_1.png" id="2_7j0bj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hj4py"]

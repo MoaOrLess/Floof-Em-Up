@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://c7a3g5iw3x7m1"]
 
-[ext_resource type="Script" path="res://SCENES/Player.gd" id="1_52m1h"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/Player.gd" id="1_52m1h"]
 [ext_resource type="PackedScene" uid="uid://cg76nmvqutokr" path="res://SCENES/slot.tscn" id="2_yvjjm"]
 [ext_resource type="Resource" uid="uid://cwf5eujiksef2" path="res://RESOURCES/WEAPONS/Bubble Magic.tres" id="3_brbr8"]
 [ext_resource type="Texture2D" uid="uid://bcfnma6naoxta" path="res://ART/Floof Player_Place holder.png" id="4_74nsp"]
@@ -67,10 +67,10 @@ script = ExtResource("1_52m1h")
 z_index = 1
 anchors_preset = -1
 anchor_top = -0.006
-offset_left = 113.0
-offset_top = 160.48
-offset_right = 421.0
-offset_bottom = 254.0
+offset_left = 90.0
+offset_top = 163.48
+offset_right = 398.0
+offset_bottom = 257.0
 
 [node name="Slot" parent="UI/Weapons" instance=ExtResource("2_yvjjm")]
 z_index = 1
@@ -88,7 +88,7 @@ layout_mode = 2
 [node name="Health" type="ProgressBar" parent="UI"]
 unique_name_in_owner = true
 z_index = 1
-offset_left = 105.0
+offset_left = 82.0
 offset_top = 108.0
 offset_right = 559.0
 offset_bottom = 141.0
@@ -99,7 +99,7 @@ show_percentage = false
 
 [node name="XP" type="ProgressBar" parent="UI"]
 unique_name_in_owner = true
-offset_left = 103.0
+offset_left = 81.0
 offset_top = 60.0
 offset_right = 1839.0
 offset_bottom = 95.0
@@ -109,21 +109,23 @@ value = 100.0
 show_percentage = false
 
 [node name="Star" type="Sprite2D" parent="UI"]
-position = Vector2(1845, 70)
+position = Vector2(1821.45, 75.2225)
 rotation = -0.138061
 scale = Vector2(0.0750838, 0.0750838)
 texture = ExtResource("4_hxy3f")
 
 [node name="Level" type="Label" parent="UI"]
 unique_name_in_owner = true
-offset_left = 1825.0
-offset_top = 54.0
-offset_right = 1865.0
-offset_bottom = 90.0
+offset_left = 1801.45
+offset_top = 59.2225
+offset_right = 1841.45
+offset_bottom = 95.2225
 theme_override_fonts/font = ExtResource("5_sptkt")
 theme_override_font_sizes/font_size = 35
 text = "1"
 horizontal_alignment = 1
+
+[node name="Node2D" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -132)
@@ -155,6 +157,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Magnet"]
 shape = SubResource("CircleShape2D_1g3fg")
+metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="SelfDamage" to="." method="_on_self_damage_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

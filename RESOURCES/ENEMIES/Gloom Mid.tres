@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=5 format=3 uid="uid://ctrkhohcw8t05"]
 
-[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_i3nir"]
-[ext_resource type="Script" path="res://RESOURCES/PickupResource.gd" id="1_vfj0t"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/EnemyType.gd" id="1_i3nir"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/PickupResource.gd" id="1_vfj0t"]
 [ext_resource type="Texture2D" uid="uid://b2qrfsv0b4qo2" path="res://ART/Mid_Gloom_1.png" id="2_gjhdo"]
 [ext_resource type="Resource" uid="uid://byurruh1njlbp" path="res://RESOURCES/PICKUPS/Twinkel Hope.tres" id="2_vpbvo"]
 

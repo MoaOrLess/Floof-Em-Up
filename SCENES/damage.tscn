@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnnjfjdwtd32i"]
 
-[ext_resource type="Script" path="res://SCENES/damage.gd" id="1_owin6"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/damage.gd" id="1_owin6"]
 [ext_resource type="FontFile" uid="uid://bolsjlnbbmd3l" path="res://FONTS/FranxurterTotallyFat-X3G4Z.ttf" id="1_xl7fb"]
 
 [node name="Damage" type="Label"]

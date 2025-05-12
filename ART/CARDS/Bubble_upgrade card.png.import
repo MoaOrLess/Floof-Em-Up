@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2ic6cuw5svmb"
-path="res://.godot/imported/Bubble_attack.png-e6dac32a355ca077610e6a5806639072.ctex"
+uid="uid://damxvr8arm468"
+path="res://.godot/imported/Bubble_upgrade card.png-735248a2f2d51d38b9cb081b5a9b4da3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART/ATTACKS/Bubble_attack.png"
-dest_files=["res://.godot/imported/Bubble_attack.png-e6dac32a355ca077610e6a5806639072.ctex"]
+source_file="res://ART/CARDS/Bubble_upgrade card.png"
+dest_files=["res://.godot/imported/Bubble_upgrade card.png-735248a2f2d51d38b9cb081b5a9b4da3.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://c4whmuykle3ny"]
 
 [ext_resource type="Texture2D" uid="uid://w5jo1dfai4dn" path="res://ART/Ground_Grass_1.png" id="1_4ddy1"]
-[ext_resource type="Script" path="res://SCENES/test_scene.gd" id="1_7qm2r"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/test_scene.gd" id="1_7qm2r"]
 [ext_resource type="PackedScene" uid="uid://b14q0uljhdj4j" path="res://SCENES/spawner.tscn" id="1_46yy0"]
 [ext_resource type="PackedScene" uid="uid://c7a3g5iw3x7m1" path="res://SCENES/Player.tscn" id="1_jcmrv"]
 [ext_resource type="AudioStream" uid="uid://bovcl1bgmf78f" path="res://SOUNDS/Mourn the Morn.mp3" id="5_4bnh7"]
@@ -24,6 +24,7 @@ script = ExtResource("1_7qm2r")
 player_reference = NodePath("Player")
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
+z_index = -1
 repeat_size = Vector2(3000, 2000)
 repeat_times = 4
 

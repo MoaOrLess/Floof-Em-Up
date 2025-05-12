@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dr8jq6nmpr3p4"]
 
-[ext_resource type="Script" path="res://SCENES/projectile.gd" id="1_653cg"]
-[ext_resource type="Texture2D" uid="uid://d2ic6cuw5svmb" path="res://ART/Attacks/Bubble_attack.png" id="2_hdu58"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/projectile.gd" id="1_653cg"]
+[ext_resource type="Texture2D" uid="uid://d2ic6cuw5svmb" path="res://ART/ATTACKS/Bubble_attack.png" id="2_hdu58"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_57k5r"]
 radius = 22.0

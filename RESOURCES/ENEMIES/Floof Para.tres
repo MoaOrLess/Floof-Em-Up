@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=5 format=3 uid="uid://qw8vbhc2h22l"]
 
-[ext_resource type="Script" path="res://SCENES/EnemyType.gd" id="1_517ab"]
-[ext_resource type="Script" path="res://RESOURCES/PickupResource.gd" id="1_rlfv1"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/EnemyType.gd" id="1_517ab"]
+[ext_resource type="Script" path="res://SCENES/SCRIPTS/PickupResource.gd" id="1_rlfv1"]
 [ext_resource type="Resource" uid="uid://xyi7q4lmciy0" path="res://RESOURCES/PICKUPS/Sparkle Hope.tres" id="2_446i3"]
 [ext_resource type="Texture2D" uid="uid://c03pnaf6h8tgs" path="res://ART/Floof Para.png" id="2_segcu"]
 
