@@ -3,7 +3,8 @@ extends CharacterBody2D
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var PUNCH = preload("res://SCENES/punch.tscn")
 @onready var node_2d: Node2D = $Node2D
-
+const FLOOF_PLAYER_ONE_ARM_PLACE_HOLDER = preload("res://ART/Floof Player_One Arm_Place holder.png")
+const FLOOF_PLAYER_PLACE_HOLDER = preload("res://ART/Floof Player_Place holder.png")
 
 var knockback: Vector2
 var speed: float = 200
@@ -51,13 +52,16 @@ func _physics_process(delta):
 		$Sprite2D.flip_h = true
 		
 	if Input.is_action_just_pressed("click"):
+		$Sprite2D.texture = FLOOF_PLAYER_ONE_ARM_PLACE_HOLDER
 		var punch_attack = PUNCH.instantiate()
 		var offset =  Vector2(-150,-150)
 		if $Sprite2D.flip_h == false:
-			punch_attack.flip_h
+			offset.x *= -1
 		punch_attack.position = position + offset
 		add_child(punch_attack)
-		print(punch_attack.position)
+		#print(punch_attack.position)
+		await get_tree().create_timer(0.3).timeout
+		$Sprite2D.texture = FLOOF_PLAYER_PLACE_HOLDER
 
 func take_damage(amount):
 	health -= amount
@@ -81,10 +85,11 @@ func check_XP():
 
 func camera_zoom():
 	var camera_zoom_scale = 0.05
-	if Input.is_action_just_pressed("scroll up"):
+	if Input.is_action_just_pressed("scroll up") and camera_2d.zoom <= Vector2(1.5,1.5):
 		camera_2d.zoom += Vector2(camera_zoom_scale,camera_zoom_scale)
-	if Input.is_action_just_pressed("scroll down"):
+	if Input.is_action_just_pressed("scroll down")and camera_2d.zoom >= Vector2(0.5,0.5):
 		camera_2d.zoom -= Vector2(camera_zoom_scale,camera_zoom_scale)
+	print(camera_2d.zoom)
 
 
 func _on_magnet_area_entered(area: Area2D) -> void:

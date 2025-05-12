@@ -2,6 +2,7 @@ extends Area2D
 
 var direction: Vector2
 var Speed: float = 175
+var acceleration: float = 2
 
 @export var type: Pickups
 @export var player_reference: CharacterBody2D:
@@ -18,6 +19,7 @@ func _ready():
 func _physics_process(delta):
 	if player_reference and can_follow:
 		direction = (player_reference.position - position).normalized()
+		Speed += acceleration *delta
 		position += direction * Speed * delta
 
 func follow(_target: CharacterBody2D):

@@ -8,4 +8,5 @@ class_name  Pickups
 var player_reference: CharacterBody2D
 
 func activate():
-	print(title+" picked up")
+	pass
+	#print(title+" picked up")

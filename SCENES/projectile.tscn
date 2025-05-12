@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2ic6cuw5svmb" path="res://ART/ATTACKS/Bubble_attack.png" id="2_hdu58"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_57k5r"]
-radius = 22.0
+radius = 55.0091
 
 [node name="Projectile" type="Area2D"]
 collision_layer = 0
@@ -12,6 +12,7 @@ collision_mask = 2
 script = ExtResource("1_653cg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.719931, 0.719931)
 texture = ExtResource("2_hdu58")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
