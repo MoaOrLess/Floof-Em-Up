@@ -38,6 +38,7 @@ visible = false
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_jcmrv")]
+y_sort_enabled = true
 position = Vector2(958, 599)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]

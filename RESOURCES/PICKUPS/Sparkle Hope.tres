@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Gem" load_steps=3 format=3 uid="uid://xyi7q4lmciy0"]
+[gd_resource type="Resource" script_class="Gem" load_steps=4 format=3 uid="uid://xyi7q4lmciy0"]
 
 [ext_resource type="Texture2D" uid="uid://jsej3ek4riad" path="res://ART/Twinkel_1.png" id="1_j5f5x"]
 [ext_resource type="Script" path="res://SCENES/SCRIPTS/Gem.gd" id="2_tt5m3"]
+[ext_resource type="AudioStream" uid="uid://bxn1b0quaa5a8" path="res://SOUNDS/Bells, Handbell, Shop, Door, Ring SND6605 2.wav" id="3_a3t8v"]
 
 [resource]
 script = ExtResource("2_tt5m3")
@@ -9,3 +10,4 @@ XP = 5.0
 title = "Sparkle Hope"
 icon = ExtResource("1_j5f5x")
 description = "Gain XP"
+sfx = ExtResource("3_a3t8v")
