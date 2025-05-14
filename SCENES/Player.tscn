@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c7a3g5iw3x7m1"]
+[gd_scene load_steps=22 format=3 uid="uid://c7a3g5iw3x7m1"]
 
 [ext_resource type="Script" path="res://SCENES/SCRIPTS/Player.gd" id="1_52m1h"]
 [ext_resource type="PackedScene" uid="uid://cg76nmvqutokr" path="res://SCENES/slot.tscn" id="2_yvjjm"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bf0pl7j3ju4sn" path="res://ART/Star.png" id="4_hxy3f"]
 [ext_resource type="FontFile" uid="uid://durl8njfq1hv2" path="res://FONTS/FranxurterTotallyMedium-gxwjp.ttf" id="5_sptkt"]
 [ext_resource type="Texture2D" uid="uid://dylafyfkkg1mg" path="res://ART/ATTACKS/Fist Side.png" id="6_tna5d"]
+[ext_resource type="Texture2D" uid="uid://l1d0rko05tqy" path="res://ART/ATTACKS/Fist 2 Side.png" id="7_we1to"]
+[ext_resource type="AudioStream" uid="uid://dl8grqyr7hriy" path="res://SOUNDS/power-punch-192118.mp3" id="8_dadtd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rr5n"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 0.427451)
@@ -112,7 +114,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-328.01, -104)]
+"values": [Vector2(-70, -104)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -124,7 +126,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -138,15 +140,93 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(-358, -90)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mele Attacks/Fist Punch Area 2/First Punch 2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-70, -104)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-352, -58)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_snx6g"]
+resource_name = "Punch 2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mele Attacks/Fist Punch Area 2/First Punch 2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-70, -104), Vector2(-328.01, -104), Vector2(-328.01, -104), Vector2(-70, -104)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-70, -58), Vector2(-352, -58), Vector2(-352, -58), Vector2(-70, -58)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i8rke"]
 _data = {
 "Punch 1": SubResource("Animation_dacwp"),
+"Punch 2": SubResource("Animation_snx6g"),
 "RESET": SubResource("Animation_r3kj4")
 }
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
+collision_mask = 9
 script = ExtResource("1_52m1h")
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -213,6 +293,16 @@ theme_override_font_sizes/font_size = 35
 text = "1"
 horizontal_alignment = 1
 
+[node name="Kills" type="Label" parent="UI"]
+offset_left = 1228.0
+offset_top = 133.0
+offset_right = 1853.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("5_sptkt")
+theme_override_font_sizes/font_size = 46
+text = "1000000000000000"
+horizontal_alignment = 2
+
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Mele Attacks" type="Node2D" parent="."]
@@ -223,12 +313,27 @@ collision_mask = 2
 
 [node name="First Punch" type="Sprite2D" parent="Mele Attacks/Fist Punch Area"]
 z_index = -1
-position = Vector2(-328.01, -104)
+position = Vector2(-70, -104)
 texture = ExtResource("6_tna5d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mele Attacks/Fist Punch Area"]
 position = Vector2(-358, -90)
 shape = SubResource("RectangleShape2D_s1q58")
+disabled = true
+
+[node name="Fist Punch Area 2" type="Area2D" parent="Mele Attacks"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="First Punch 2" type="Sprite2D" parent="Mele Attacks/Fist Punch Area 2"]
+z_index = -1
+position = Vector2(-70, -104)
+texture = ExtResource("7_we1to")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mele Attacks/Fist Punch Area 2"]
+position = Vector2(-352, -58)
+shape = SubResource("RectangleShape2D_s1q58")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -132)
@@ -265,17 +370,29 @@ metadata/_edit_lock_ = true
 [node name="Node" type="Node" parent="."]
 
 [node name="Mele Timer" type="Timer" parent="Node"]
+wait_time = 0.3
+one_shot = true
 
 [node name="Mele Cooldown" type="Timer" parent="Node"]
 
 [node name="Mele Combo Cooldown" type="Timer" parent="Node"]
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_i8rke")
 }
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_dadtd")
+volume_db = -5.0
+pitch_scale = 1.5
+max_polyphony = 3
+
 [connection signal="body_entered" from="Mele Attacks/Fist Punch Area" to="." method="_on_fist_punch_area_body_entered"]
+[connection signal="body_entered" from="Mele Attacks/Fist Punch Area 2" to="." method="_on_fist_punch_area_2_body_entered"]
 [connection signal="body_entered" from="SelfDamage" to="." method="_on_self_damage_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="Magnet" to="." method="_on_magnet_area_entered"]
+[connection signal="timeout" from="Node/Mele Timer" to="." method="_on_mele_timer_timeout"]
+[connection signal="timeout" from="Node/Mele Combo Cooldown" to="." method="_on_mele_combo_cooldown_timeout"]

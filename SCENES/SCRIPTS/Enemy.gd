@@ -7,6 +7,7 @@ var speed: float = 75
 var damage: float
 var knockback: Vector2
 var separation: float
+var kill_count: float
 
 var drop = preload("res://SCENES/pickups.tscn")
 
@@ -14,6 +15,7 @@ var health: float:
 	set(value):
 		health = value
 		if health <= 0:
+			kill_count_up()
 			drop_item()
 			queue_free()
 			
@@ -39,10 +41,12 @@ func _physics_process(delta):
 	knockback_update(delta)
 	enemy_facing()
 
+func kill_count_up():
+	kill_count += 1
 
 func check_separation(_delta):
 	separation = (player_reference.position - position).length()
-	if separation >= 2000 and not elite:
+	if separation >= 2500 and not elite:
 		queue_free()
 	
 	if separation < player_reference.nearest_enemy_distance:

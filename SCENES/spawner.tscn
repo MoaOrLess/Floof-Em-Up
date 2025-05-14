@@ -20,9 +20,9 @@ enemy_types = Array[ExtResource("3_ynim2")]([ExtResource("3_g3lh6"), ExtResource
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI"]
 offset_left = 930.0
-offset_top = 100.0
+offset_top = 110.0
 offset_right = 1010.0
-offset_bottom = 141.0
+offset_bottom = 151.0
 pivot_offset = Vector2(40, 20)
 
 [node name="Minute" type="Label" parent="UI/HBoxContainer"]

@@ -6,7 +6,7 @@ extends Node2D
 
 #var vpr = get_viewport_rect().size
 #Distance from player to spawn
-var distance: float = 1200
+var distance: float = 2000
 var can_spawn: bool = true
 
 #to store an array of enemies

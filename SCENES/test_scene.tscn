@@ -26,7 +26,7 @@ player_reference = NodePath("Player")
 [node name="Parallax2D" type="Parallax2D" parent="."]
 z_index = -1
 repeat_size = Vector2(3000, 2000)
-repeat_times = 4
+repeat_times = 3
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Parallax2D"]
 scale = Vector2(0.5, 0.5)
@@ -41,8 +41,10 @@ player = NodePath("../Player")
 y_sort_enabled = true
 position = Vector2(958, 599)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="Player"]
+visible = false
 scale = Vector2(2, 2)
 stream = ExtResource("5_4bnh7")
-volume_db = -20.0
+volume_db = -80.0
 autoplay = true
+max_polyphony = 3

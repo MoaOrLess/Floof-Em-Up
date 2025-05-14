@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://8y84e2cwixto"]
+
+[ext_resource type="Texture2D" uid="uid://bcfnma6naoxta" path="res://ART/Floof Player_Place holder.png" id="1_gxtkl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l0k0s"]
+radius = 69.0
+height = 356.0
+
+[node name="NPC Floof" type="CharacterBody2D"]
+y_sort_enabled = true
+scale = Vector2(0.35, 0.35)
+collision_layer = 8
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -132)
+texture = ExtResource("1_gxtkl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_l0k0s")
