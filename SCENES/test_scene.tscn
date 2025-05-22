@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://c4whmuykle3ny"]
+[gd_scene load_steps=9 format=4 uid="uid://c4whmuykle3ny"]
 
 [ext_resource type="Texture2D" uid="uid://w5jo1dfai4dn" path="res://ART/Ground_Grass_1.png" id="1_4ddy1"]
 [ext_resource type="Script" path="res://SCENES/SCRIPTS/test_scene.gd" id="1_7qm2r"]
 [ext_resource type="PackedScene" uid="uid://b14q0uljhdj4j" path="res://SCENES/spawner.tscn" id="1_46yy0"]
 [ext_resource type="PackedScene" uid="uid://c7a3g5iw3x7m1" path="res://SCENES/Player.tscn" id="1_jcmrv"]
 [ext_resource type="AudioStream" uid="uid://bovcl1bgmf78f" path="res://SOUNDS/Mourn the Morn.mp3" id="5_4bnh7"]
+[ext_resource type="Texture2D" uid="uid://c5yoo7d887n8y" path="res://ART/Shadow_floof_player.png" id="6_4d4jv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u3mph"]
 texture = ExtResource("1_4ddy1")
@@ -48,3 +49,8 @@ stream = ExtResource("5_4bnh7")
 volume_db = -80.0
 autoplay = true
 max_polyphony = 3
+
+[node name="ShadowFloofPlayer" type="Sprite2D" parent="Player"]
+z_index = -1
+position = Vector2(-12, -122)
+texture = ExtResource("6_4d4jv")

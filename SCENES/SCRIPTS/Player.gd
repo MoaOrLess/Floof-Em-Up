@@ -6,6 +6,10 @@ extends CharacterBody2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var player: CharacterBody2D = $"."
 
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var self_damage: Area2D = $SelfDamage
+
+@onready var shadow_floof_player: Sprite2D = $ShadowFloofPlayer
 
 
 const FLOOF_PLAYER_ONE_ARM_PLACE_HOLDER = preload("res://ART/Floof Player_One Arm_Place holder.png")
@@ -77,15 +81,12 @@ func _physics_process(delta):
 	else:
 		nearest_enemy_distance = INF
 	
-	
-	#velocity = Input.get_vector("left","right","up","down") * speed
-	floof_Jump_2()
+	floof_Jump()
 	move_and_collide(velocity * delta)
-	#move_and_slide()
+	floof_shadow()
 	check_XP()
-	#punch_attack_inst()
 	punch_attack()
-	punch_attack_2()
+	secondary_punch_attack()
 	$UI/Kills.text = str(kill_count)
 	
 	if shake_strength > 0:
@@ -97,11 +98,10 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
-	player_pos_x.text = "pos x: " + str(position.x)
-	player_pos_z.text = "pos z: " + str(z)
-	player_pos_y.text = "pos y: " + str(position.y)
-	
-	#floof_Jump(delta)
+	player_pos_x.text = "pos z: " + str(z)
+	player_pos_z.text = "pos z_move: " + str(z_move)
+	player_pos_y.text = "vel: " + str(velocity)
+
 
 func apply_shake():
 	shake_strength = randomStrength
@@ -127,48 +127,39 @@ func punch_attack():
 			$"Node/Mele Timer".start()
 			$"Node/Mele Combo Cooldown".start()
 
+func floof_shadow():
+	if z > 0:
+		shadow_floof_player.position.y = 0
+	else:
+		shadow_floof_player.position.y = 0
 
-func floof_Jump_2():
+func floof_Jump():
 	var jumpState = "NOT JUMPING"
 	if z > 0:
+		collision_shape_2d.disabled = true
+		%Collision.disabled = true
+		z_index = 1
 		jumpState = "JUMPING"
 		z_move -= grav
 		z += z_move
-		if not Input.is_action_just_pressed("jump") and z_move > 0:
-			z_move -= 2000
+		velocity.y += grav
 	else:
 		jumpState = "NOT JUMPING"
 		z = 0
+		collision_shape_2d.disabled = false
+		%Collision.disabled = false
+		z_index = 0
 		if Input.is_action_pressed("jump"):
 			jumpState = "JUMPING"
 			z_move += 2000
 			z = z_move
+			velocity.y -= 2000
 		else:
 			z_move = 0
 			velocity = Input.get_vector("left","right","up","down") * speed
-	velocity.y -= z_move
 
-func floof_Jump(delta):
-	var jumpState = "NOT JUMPING"
-	if z > 0:
-		jumpState = "JUMPING"
-		z_move -= grav
-		z += z_move
-		if not Input.is_action_just_pressed("jump") and z_move > 0:
-			z_move = 0
-	else:
-		jumpState = "NOT JUMPING"
-		z = 0
-		if Input.is_action_just_pressed("jump"):
-			jumpState = "JUMPING"
-			z_move += 200
-			z = z_move
-		else:
-			z_move = 0
-			sprite_2d.position.y = z_move
-	player.position.y -= z_move
 
-func punch_attack_2():
+func secondary_punch_attack():
 	if Input.is_action_just_pressed("click"):
 		if can_attack == true and can_combo == true:
 			can_attack = false
@@ -186,20 +177,6 @@ func punch_attack_2():
 			$"Node/Mele Timer".start()
 			$"Node/Mele Combo Cooldown".start()
 
-func punch_attack_instance():
-	if Input.is_action_just_pressed("click"):
-		$Sprite2D.texture = FLOOF_PLAYER_ONE_ARM_PLACE_HOLDER
-		var punch_attack_inst = PUNCH.instantiate()
-		var offset =  Vector2(150,150)
-		if $Sprite2D.flip_h == true:
-			punch_attack_inst.set_scale(Vector2(-1, 1))
-			punch_attack_inst.position = position + offset
-		punch_attack_inst.position = position + offset
-		add_child(punch_attack_inst)     
-		#print(punch_attack.position)
-		await get_tree().create_timer(0.3).timeout
-		$Sprite2D.texture = FLOOF_PLAYER_PLACE_HOLDER
-		$AnimationPlayer.play("RESET")
 
 func take_damage(amount):
 	health -= amount
