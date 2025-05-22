@@ -3,9 +3,24 @@ extends CharacterBody2D
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var PUNCH = preload("res://SCENES/punch.tscn")
 @onready var node_2d: Node2D = $Node2D
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var player: CharacterBody2D = $"."
+
+
+
 const FLOOF_PLAYER_ONE_ARM_PLACE_HOLDER = preload("res://ART/Floof Player_One Arm_Place holder.png")
 const FLOOF_PLAYER_PLACE_HOLDER = preload("res://ART/Floof Player_Place holder.png")
 
+#PRINT
+@onready var player_pos_x: Label = $"UI/Control/Player pos x"
+@onready var player_pos_z: Label = $"UI/Control/Player pos z"
+@onready var player_pos_y: Label = $"UI/Control/Player pos y"
+
+
+var grav = 100
+var z_pos= 0
+var z_move = 0
+var z = 0
 
 
 var knockback: Vector2
@@ -49,7 +64,7 @@ var shake_strength: float = 0
 var can_attack: bool = true
 var can_combo: bool = false
 
-var kill_count = 0
+var kill_count: float
 
 func _ready() -> void:
 	$"Mele Attacks/Fist Punch Area/First Punch".visible = false
@@ -63,7 +78,8 @@ func _physics_process(delta):
 		nearest_enemy_distance = INF
 	
 	
-	velocity = Input.get_vector("left","right","up","down") * speed
+	#velocity = Input.get_vector("left","right","up","down") * speed
+	floof_Jump_2()
 	move_and_collide(velocity * delta)
 	#move_and_slide()
 	check_XP()
@@ -81,6 +97,11 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
+	player_pos_x.text = "pos x: " + str(position.x)
+	player_pos_z.text = "pos z: " + str(z)
+	player_pos_y.text = "pos y: " + str(position.y)
+	
+	#floof_Jump(delta)
 
 func apply_shake():
 	shake_strength = randomStrength
@@ -107,6 +128,45 @@ func punch_attack():
 			$"Node/Mele Combo Cooldown".start()
 
 
+func floof_Jump_2():
+	var jumpState = "NOT JUMPING"
+	if z > 0:
+		jumpState = "JUMPING"
+		z_move -= grav
+		z += z_move
+		if not Input.is_action_just_pressed("jump") and z_move > 0:
+			z_move -= 2000
+	else:
+		jumpState = "NOT JUMPING"
+		z = 0
+		if Input.is_action_pressed("jump"):
+			jumpState = "JUMPING"
+			z_move += 2000
+			z = z_move
+		else:
+			z_move = 0
+			velocity = Input.get_vector("left","right","up","down") * speed
+	velocity.y -= z_move
+
+func floof_Jump(delta):
+	var jumpState = "NOT JUMPING"
+	if z > 0:
+		jumpState = "JUMPING"
+		z_move -= grav
+		z += z_move
+		if not Input.is_action_just_pressed("jump") and z_move > 0:
+			z_move = 0
+	else:
+		jumpState = "NOT JUMPING"
+		z = 0
+		if Input.is_action_just_pressed("jump"):
+			jumpState = "JUMPING"
+			z_move += 200
+			z = z_move
+		else:
+			z_move = 0
+			sprite_2d.position.y = z_move
+	player.position.y -= z_move
 
 func punch_attack_2():
 	if Input.is_action_just_pressed("click"):
@@ -167,7 +227,7 @@ func camera_zoom():
 		camera_2d.zoom += Vector2(camera_zoom_scale,camera_zoom_scale)
 	if Input.is_action_just_pressed("scroll down")and camera_2d.zoom >= Vector2(0.5,0.5):
 		camera_2d.zoom -= Vector2(camera_zoom_scale,camera_zoom_scale)
-	print(camera_2d.zoom)
+	#print(camera_2d.zoom)
 
 
 func _on_magnet_area_entered(area: Area2D) -> void:

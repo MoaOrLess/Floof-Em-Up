@@ -102,6 +102,46 @@ tracks/2/keys = {
 "values": [Vector2(-70, -90), Vector2(-358, -90), Vector2(-358, -90), Vector2(-70, -90)]
 }
 
+[sub_resource type="Animation" id="Animation_snx6g"]
+resource_name = "Punch 2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mele Attacks/Fist Punch Area 2/First Punch 2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-70, -104), Vector2(-328.01, -104), Vector2(-328.01, -104), Vector2(-70, -104)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-70, -58), Vector2(-352, -58), Vector2(-352, -58), Vector2(-70, -58)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, false, true]
+}
+
 [sub_resource type="Animation" id="Animation_r3kj4"]
 length = 0.001
 tracks/0/type = "value"
@@ -175,46 +215,6 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_snx6g"]
-resource_name = "Punch 2"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Mele Attacks/Fist Punch Area 2/First Punch 2:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-70, -104), Vector2(-328.01, -104), Vector2(-328.01, -104), Vector2(-70, -104)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-70, -58), Vector2(-352, -58), Vector2(-352, -58), Vector2(-70, -58)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Mele Attacks/Fist Punch Area 2/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [false, false, false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i8rke"]
@@ -302,6 +302,39 @@ theme_override_fonts/font = ExtResource("5_sptkt")
 theme_override_font_sizes/font_size = 46
 text = "1000000000000000"
 horizontal_alignment = 2
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player pos x" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = 1252.0
+offset_top = 483.0
+offset_right = 1457.0
+offset_bottom = 552.0
+theme_override_font_sizes/font_size = 50
+text = "Player x:"
+
+[node name="Player pos z" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = 1252.0
+offset_top = 611.0
+offset_right = 1457.0
+offset_bottom = 680.0
+theme_override_font_sizes/font_size = 50
+text = "Player z:"
+
+[node name="Player pos y" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = 1252.0
+offset_top = 545.0
+offset_right = 1457.0
+offset_bottom = 614.0
+theme_override_font_sizes/font_size = 50
+text = "Player y:"
 
 [node name="Node2D" type="Node2D" parent="."]
 

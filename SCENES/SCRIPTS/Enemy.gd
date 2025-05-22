@@ -16,6 +16,7 @@ var health: float:
 		health = value
 		if health <= 0:
 			kill_count_up()
+			print(kill_count)
 			drop_item()
 			queue_free()
 			
@@ -42,7 +43,7 @@ func _physics_process(delta):
 	enemy_facing()
 
 func kill_count_up():
-	kill_count += 1
+	player_reference.kill_count += 1
 
 func check_separation(_delta):
 	separation = (player_reference.position - position).length()
