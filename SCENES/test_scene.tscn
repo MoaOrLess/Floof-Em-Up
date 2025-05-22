@@ -52,5 +52,5 @@ max_polyphony = 3
 
 [node name="ShadowFloofPlayer" type="Sprite2D" parent="Player"]
 z_index = -1
-position = Vector2(-12, -122)
+position = Vector2(-2.38, -130)
 texture = ExtResource("6_4d4jv")

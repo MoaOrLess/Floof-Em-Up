@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var player: CharacterBody2D = $"."
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
 @onready var self_damage: Area2D = $SelfDamage
 
 @onready var shadow_floof_player: Sprite2D = $ShadowFloofPlayer
@@ -29,6 +30,7 @@ var z = 0
 
 var knockback: Vector2
 var speed: float = 200
+var dash_speed = 200
 var health: float = 100:
 	set(value):
 		health = value
@@ -36,6 +38,8 @@ var health: float = 100:
 
 var nearest_enemy: CharacterBody2D
 var nearest_enemy_distance: float = INF
+
+@onready var Shadow_default_pos = shadow_floof_player.position.y
 
 var XP: int = 0:
 	set(value):
@@ -81,9 +85,9 @@ func _physics_process(delta):
 	else:
 		nearest_enemy_distance = INF
 	
-	floof_Jump()
+	floof_Jump(delta)
 	move_and_collide(velocity * delta)
-	floof_shadow()
+	
 	check_XP()
 	punch_attack()
 	secondary_punch_attack()
@@ -98,7 +102,7 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
-	player_pos_x.text = "pos z: " + str(z)
+	player_pos_x.text = "pos y: " + str(position.y)
 	player_pos_z.text = "pos z_move: " + str(z_move)
 	player_pos_y.text = "vel: " + str(velocity)
 
@@ -127,13 +131,15 @@ func punch_attack():
 			$"Node/Mele Timer".start()
 			$"Node/Mele Combo Cooldown".start()
 
-func floof_shadow():
+func floof_shadow(delta):
 	if z > 0:
-		shadow_floof_player.position.y = 0
+		shadow_floof_player.position.y += z_move * delta * 2
+		shadow_floof_player.scale = Vector2(0.75,0.75) 
 	else:
-		shadow_floof_player.position.y = 0
+		shadow_floof_player.position.y = Shadow_default_pos
+		shadow_floof_player.scale = Vector2(1,1)
 
-func floof_Jump():
+func floof_Jump(delta):
 	var jumpState = "NOT JUMPING"
 	if z > 0:
 		collision_shape_2d.disabled = true
@@ -156,7 +162,13 @@ func floof_Jump():
 			velocity.y -= 2000
 		else:
 			z_move = 0
-			velocity = Input.get_vector("left","right","up","down") * speed
+			if Input.is_action_pressed("dash"):
+				var speed_with_dash = speed * 10
+				velocity = Input.get_vector("left","right","up","down") * speed_with_dash
+			else:
+				velocity = Input.get_vector("left","right","up","down") * speed
+	floof_shadow(delta)
+
 
 
 func secondary_punch_attack():
