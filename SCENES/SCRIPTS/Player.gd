@@ -30,7 +30,12 @@ var z = 0
 
 var knockback: Vector2
 var speed: float = 200
-var dash_speed = 200
+var run_speed: float = 400
+var dash_speed: float = 2000
+var isDashing = false
+var direction: Vector2
+
+
 var health: float = 100:
 	set(value):
 		health = value
@@ -102,7 +107,7 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
-	player_pos_x.text = "pos y: " + str(position.y)
+	player_pos_x.text = "isDashing: " + str(isDashing)
 	player_pos_z.text = "pos z_move: " + str(z_move)
 	player_pos_y.text = "vel: " + str(velocity)
 
@@ -134,13 +139,24 @@ func punch_attack():
 func floof_shadow(delta):
 	if z > 0:
 		shadow_floof_player.position.y += z_move * delta * 2
-		shadow_floof_player.scale = Vector2(0.75,0.75) 
+		shadow_floof_player.scale *= Vector2(0.99,0.99) 
+		shadow_floof_player.modulate.a -= 0.01
+		
 	else:
 		shadow_floof_player.position.y = Shadow_default_pos
 		shadow_floof_player.scale = Vector2(1,1)
+		shadow_floof_player.modulate.a = 0.4
 
 func floof_Jump(delta):
 	var jumpState = "NOT JUMPING"
+	
+	if not isDashing and Input.is_action_just_pressed("Dodge") and direction != Vector2.ZERO:
+		isDashing = true
+		speed = dash_speed
+		$"Node/Dash Timer".start(0.3)
+		dodge_effect()
+	
+	
 	if z > 0:
 		collision_shape_2d.disabled = true
 		%Collision.disabled = true
@@ -152,8 +168,12 @@ func floof_Jump(delta):
 	else:
 		jumpState = "NOT JUMPING"
 		z = 0
-		collision_shape_2d.disabled = false
-		%Collision.disabled = false
+		if isDashing == true:
+			collision_shape_2d.disabled = true
+			%Collision.disabled = true
+		else:
+			collision_shape_2d.disabled = false
+			%Collision.disabled = false
 		z_index = 0
 		if Input.is_action_pressed("jump"):
 			jumpState = "JUMPING"
@@ -162,14 +182,35 @@ func floof_Jump(delta):
 			velocity.y -= 2000
 		else:
 			z_move = 0
+			direction = Input.get_vector("left","right","up","down")
 			if Input.is_action_pressed("dash"):
-				var speed_with_dash = speed * 10
-				velocity = Input.get_vector("left","right","up","down") * speed_with_dash
+				var speed_with_run = speed + run_speed
+				velocity = direction * speed_with_run
 			else:
-				velocity = Input.get_vector("left","right","up","down") * speed
+				velocity = direction * speed
+	
+	
 	floof_shadow(delta)
+	
 
+func dodge_effect():
+	var newSprite = sprite_2d.duplicate()
+	var animation_time = $"Node/Dash Timer".wait_time / dash_speed
+	var fade_steps = 3
+	var fade_amount = 0.2
+	newSprite.scale = Vector2(0.5,0.5)
+	newSprite.z_index = -1
+	get_parent().add_child(newSprite)
+	newSprite.global_position = sprite_2d.global_position
+	
+	for i in range(fade_steps):
+		await get_tree().create_timer((animation_time)).timeout
+		newSprite.modulate.r = 1
+		newSprite.modulate.a -= fade_amount
+	
 
+	
+	newSprite.queue_free()
 
 func secondary_punch_attack():
 	if Input.is_action_just_pressed("click"):
@@ -246,3 +287,10 @@ func _on_mele_timer_timeout() -> void:
 
 func _on_mele_combo_cooldown_timeout() -> void:
 	can_combo = false
+
+
+func _on_dash_timer_timeout() -> void:
+	$"Node/Dash Timer".stop()
+	isDashing = false
+	speed = 200
+	
