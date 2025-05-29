@@ -16,7 +16,7 @@ var health: float:
 		health = value
 		if health <= 0:
 			kill_count_up()
-			print(kill_count)
+	
 			drop_item()
 			queue_free()
 			

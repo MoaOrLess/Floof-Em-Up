@@ -29,12 +29,17 @@ var z = 0
 
 
 var knockback: Vector2
-var speed: float = 200
-var run_speed: float = 400
-var dash_speed: float = 2000
-var isDashing = false
+const speed_walk: float = 200
+var speed_calcu: float
+const speed_sprint: float = 400
+const speed_dodge: float = 2000
+var isDodging = false
+var jumpState
 var direction: Vector2
 
+#NEW MERLING STATEMACHINE-LIKE THING
+enum STATES {NOT_JUMPING, JUMPING}
+var tracker_states
 
 var health: float = 100:
 	set(value):
@@ -107,7 +112,7 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
-	player_pos_x.text = "isDashing: " + str(isDashing)
+	player_pos_x.text = "Speed Calculation: " + str(speed_calcu)
 	player_pos_z.text = "pos z_move: " + str(z_move)
 	player_pos_y.text = "vel: " + str(velocity)
 
@@ -148,27 +153,40 @@ func floof_shadow(delta):
 		shadow_floof_player.modulate.a = 0.4
 
 func floof_Jump(delta):
-	var jumpState = "NOT JUMPING"
+	jumpState = STATES.NOT_JUMPING
+	$GroundSlam/GroundSlamCol.disabled = true
 	
-	if not isDashing and Input.is_action_just_pressed("Dodge") and direction != Vector2.ZERO:
-		isDashing = true
-		speed = dash_speed
+	if not isDodging and Input.is_action_just_pressed("Dodge"):
+		isDodging = true
+		speed_calcu = speed_dodge
 		$"Node/Dash Timer".start(0.3)
 		dodge_effect()
-	
 	
 	if z > 0:
 		collision_shape_2d.disabled = true
 		%Collision.disabled = true
 		z_index = 1
-		jumpState = "JUMPING"
+		jumpState = STATES.JUMPING
 		z_move -= grav
 		z += z_move
-		velocity.y += grav
+		run()
+		if Input.is_action_just_pressed("Dodge"):
+			$GroundSlam/GroundSlamCol.disabled = false
+			z_move -= 2000
+			#z = z_move
+			velocity.y += 2000
+			#apply_shake()
+			print(">>>>> BOOTY BOUNCE ")
+		else:
+			$GroundSlam/GroundSlamCol.disabled = true
+			velocity.y += grav
+			floof_shadow(delta)
+		
+
 	else:
-		jumpState = "NOT JUMPING"
+		jumpState = STATES.NOT_JUMPING
 		z = 0
-		if isDashing == true:
+		if isDodging == true:
 			collision_shape_2d.disabled = true
 			%Collision.disabled = true
 		else:
@@ -176,26 +194,43 @@ func floof_Jump(delta):
 			%Collision.disabled = false
 		z_index = 0
 		if Input.is_action_pressed("jump"):
-			jumpState = "JUMPING"
+			jumpState = STATES.JUMPING
 			z_move += 2000
 			z = z_move
 			velocity.y -= 2000
 		else:
 			z_move = 0
 			direction = Input.get_vector("left","right","up","down")
-			if Input.is_action_pressed("dash"):
-				var speed_with_run = speed + run_speed
-				velocity = direction * speed_with_run
-			else:
-				velocity = direction * speed
-	
-	
-	floof_shadow(delta)
-	
+			run()
+			velocity = direction * speed_calcu
+		floof_shadow(delta)
+
+func boiler():
+	match tracker_states:
+		STATES.JUMPING:
+			print("param3 is 3!")
+		STATES.JUMPING:
+			print("param3 is 3!")
+		_:
+			print("param3 is not 3!")
+
+func run():
+	if Input.is_action_pressed("run"):
+		speed_calcu = speed_walk + speed_sprint
+		if isDodging == false:
+			speed_calcu = speed_walk + speed_sprint
+		else: 
+			speed_calcu = speed_dodge
+		
+	else:
+		if isDodging == false:
+			speed_calcu = speed_walk
+		else: 
+			speed_calcu = speed_dodge
 
 func dodge_effect():
 	var newSprite = sprite_2d.duplicate()
-	var animation_time = $"Node/Dash Timer".wait_time / dash_speed
+	var animation_time = $"Node/Dash Timer".wait_time / speed_dodge
 	var fade_steps = 3
 	var fade_amount = 0.2
 	newSprite.scale = Vector2(0.5,0.5)
@@ -241,6 +276,8 @@ func _on_timer_timeout() -> void:
 
 func _on_self_damage_body_entered(body):
 	take_damage(body.damage)
+	
+	
 
 func gain_XP(amount):
 	XP += amount
@@ -257,7 +294,7 @@ func camera_zoom():
 		camera_2d.zoom += Vector2(camera_zoom_scale,camera_zoom_scale)
 	if Input.is_action_just_pressed("scroll down")and camera_2d.zoom >= Vector2(0.5,0.5):
 		camera_2d.zoom -= Vector2(camera_zoom_scale,camera_zoom_scale)
-	#print(camera_2d.zoom)
+
 
 
 func _on_magnet_area_entered(area: Area2D) -> void:
@@ -291,6 +328,13 @@ func _on_mele_combo_cooldown_timeout() -> void:
 
 func _on_dash_timer_timeout() -> void:
 	$"Node/Dash Timer".stop()
-	isDashing = false
-	speed = 200
+	isDodging = false
+	speed_calcu = speed_walk
 	
+
+
+func _on_ground_slam_body_entered(body: Node2D) -> void:
+	if body.has_method("take_damage"):
+		if body.is_in_group("Enemy"):
+			body.knockback = attack_direction * 1000
+			body.take_damage(attack_damage)
