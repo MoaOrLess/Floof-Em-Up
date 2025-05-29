@@ -35,10 +35,12 @@ const speed_sprint: float = 400
 const speed_dodge: float = 2000
 var isDodging = false
 var jumpState
+var state_move  = STATES2.IDLE
 var direction: Vector2
 
 #NEW MERLING STATEMACHINE-LIKE THING
 enum STATES {NOT_JUMPING, JUMPING}
+enum STATES2 {IDLE, WALKING, SPRINTING, DODGING, JUMPING, DIVING}
 var tracker_states
 
 var health: float = 100:
@@ -95,7 +97,8 @@ func _physics_process(delta):
 	else:
 		nearest_enemy_distance = INF
 	
-	floof_Jump(delta)
+	#floof_Jump(delta)
+	movement(delta)
 	move_and_collide(velocity * delta)
 	
 	check_XP()
@@ -112,9 +115,10 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
-	player_pos_x.text = "Speed Calculation: " + str(speed_calcu)
+	player_pos_x.text = "STATES " + str(STATES2.find_key(state_move))
 	player_pos_z.text = "pos z_move: " + str(z_move)
-	player_pos_y.text = "vel: " + str(velocity)
+	#player_pos_z.text = "TIME LEFT: " + str($"Node/Dash Timer".time_left)
+	player_pos_y.text = "dir: " + str(direction)
 
 
 func apply_shake():
@@ -205,6 +209,56 @@ func floof_Jump(delta):
 			velocity = direction * speed_calcu
 		floof_shadow(delta)
 
+func movement(delta): #Redo of Floof_Jump()
+	direction = Input.get_vector("left","right","up","down")
+	velocity = direction * speed_calcu
+	if Input.is_action_pressed("jump") and z == 0: #from Idle to Jump
+			z_move += 2000
+			z = z_move
+	if not Input.is_action_pressed("jump") and z == 0:
+			z_move = 0
+	if z > 0 and not state_move in [STATES2.DODGING, STATES2.DIVING]:  # NOT on Ground
+		state_move = STATES2.JUMPING
+		z_move -= grav
+		z += z_move
+	if state_move == STATES2.JUMPING and z == 0:
+		state_move = STATES2.IDLE
+	if state_move == STATES2.IDLE and z == 0: 
+		if direction != Vector2.ZERO: #from Idle to Walking
+			state_move = STATES2.WALKING
+			speed_calcu = speed_walk
+		if  Input.is_action_just_pressed("Dodge"):
+			state_move = STATES2.DODGING
+	elif state_move == STATES2.WALKING and z == 0: # On Ground
+		if Input.is_action_pressed("run"): #from Walking to Sprinting
+			state_move = STATES2.SPRINTING
+			speed_calcu = speed_walk + speed_sprint
+		if  Input.is_action_just_pressed("Dodge"):
+			state_move = STATES2.DODGING
+		else:
+			if direction == Vector2.ZERO: #from Walking to Idle
+				state_move = STATES2.IDLE
+			speed_calcu = speed_walk
+	elif state_move == STATES2.SPRINTING and z == 0: # On Ground
+		if not Input.is_action_pressed("run"):#from Sprinting to Walking
+			state_move = STATES2.WALKING
+		if  Input.is_action_just_pressed("Dodge"):
+			state_move = STATES2.DODGING
+	elif state_move == STATES2.DODGING  and  $"Node/Dash Timer".is_stopped(): #On dodge enter
+		$"Node/Dash Timer".start(0.3) #From any State to Dodge
+		speed_calcu = speed_dodge
+	elif state_move == STATES2.JUMPING: 
+		if  Input.is_action_just_pressed("Dodge"): #From Jump to Dodge
+			state_move = STATES2.DODGING
+		if Input.is_action_pressed("Dodge") and Input.is_action_pressed("down"):
+			state_move = STATES2.DIVING
+	elif state_move == STATES2.DIVING: 
+		z_move -= 2000
+	velocity.y -= z_move
+	
+#if not Input.is_action_pressed("Dodge"):
+		#	state_move = STATES2.WALKING
+		#	z_move = 0
 func boiler():
 	match tracker_states:
 		STATES.JUMPING:
@@ -216,6 +270,7 @@ func boiler():
 
 func run():
 	if Input.is_action_pressed("run"):
+		#jumpState = STATES2.SPRINTING
 		speed_calcu = speed_walk + speed_sprint
 		if isDodging == false:
 			speed_calcu = speed_walk + speed_sprint
@@ -242,9 +297,6 @@ func dodge_effect():
 		await get_tree().create_timer((animation_time)).timeout
 		newSprite.modulate.r = 1
 		newSprite.modulate.a -= fade_amount
-	
-
-	
 	newSprite.queue_free()
 
 func secondary_punch_attack():
@@ -326,10 +378,11 @@ func _on_mele_combo_cooldown_timeout() -> void:
 	can_combo = false
 
 
-func _on_dash_timer_timeout() -> void:
+func _on_dash_timer_timeout() -> void:# On Dodge Exit
 	$"Node/Dash Timer".stop()
 	isDodging = false
 	speed_calcu = speed_walk
+	state_move = STATES2.IDLE
 	
 
 
