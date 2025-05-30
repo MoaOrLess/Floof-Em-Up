@@ -1,42 +1,42 @@
 extends CharacterBody2D
 
 @onready var camera_2d: Camera2D = $Camera2D
-@onready var PUNCH = preload("res://SCENES/punch.tscn")
 @onready var node_2d: Node2D = $Node2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var player: CharacterBody2D = $"."
-
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-
 @onready var self_damage: Area2D = $SelfDamage
-
 @onready var shadow_floof_player: Sprite2D = $ShadowFloofPlayer
 
-
+@onready var PUNCH = preload("res://SCENES/punch.tscn")
 const FLOOF_PLAYER_ONE_ARM_PLACE_HOLDER = preload("res://ART/Floof Player_One Arm_Place holder.png")
 const FLOOF_PLAYER_PLACE_HOLDER = preload("res://ART/Floof Player_Place holder.png")
 
-#PRINT
-@onready var player_pos_x: Label = $"UI/Control/Player pos x"
-@onready var player_pos_z: Label = $"UI/Control/Player pos z"
-@onready var player_pos_y: Label = $"UI/Control/Player pos y"
+#ON SCREEN LABELS
+@onready var info_1: Label = $"UI/Control/Info 1"
+@onready var info_2: Label = $"UI/Control/Info 2"
+@onready var info_3: Label = $"UI/Control/Info 3"
+@onready var info_4: Label = $"UI/Control/Info 4"
+@onready var info_5: Label = $"UI/Control/Info 5"
+@onready var info_6: Label = $"UI/Control/Info 6"
 
-
+#MOVEMENT 
 var grav = 100
 var z_pos= 0
 var z_move = 0
 var z = 0
 
-
-var knockback: Vector2
-const speed_walk: float = 200
 var speed_calcu: float
-const speed_sprint: float = 400
+const speed_walk: float = 200
+const speed_sprint: float = 600
 const speed_dodge: float = 2000
-var isDodging = false
-var jumpState
 var state_move  = STATES2.IDLE
 var direction: Vector2
+var jumpState
+
+var knockback: Vector2
+var isDodging = false
+@onready var Shadow_default_pos = shadow_floof_player.position.y
 
 #NEW MERLING STATEMACHINE-LIKE THING
 enum STATES {NOT_JUMPING, JUMPING}
@@ -50,8 +50,6 @@ var health: float = 100:
 
 var nearest_enemy: CharacterBody2D
 var nearest_enemy_distance: float = INF
-
-@onready var Shadow_default_pos = shadow_floof_player.position.y
 
 var XP: int = 0:
 	set(value):
@@ -77,7 +75,6 @@ var attack_speed: float = 100
 #CAMERA
 @export var randomStrength: float = 5
 @export var shakeFade: float = 2.5
-
 var rng = RandomNumberGenerator.new()
 var shake_strength: float = 0
 
@@ -99,6 +96,7 @@ func _physics_process(delta):
 	
 	#floof_Jump(delta)
 	movement(delta)
+	floof_shadow(delta)
 	move_and_collide(velocity * delta)
 	
 	check_XP()
@@ -115,10 +113,12 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = true
 	
-	player_pos_x.text = "STATES " + str(STATES2.find_key(state_move))
-	player_pos_z.text = "pos z_move: " + str(z_move)
-	#player_pos_z.text = "TIME LEFT: " + str($"Node/Dash Timer".time_left)
-	player_pos_y.text = "dir: " + str(direction)
+	info_1.text = "STATE: " + str(STATES2.find_key(state_move))
+	info_2.text = "Z: " + str(z)
+	info_3.text = "DIRECTION " + str(direction)
+	info_4.text = "VELOCITY: " + str(velocity)
+	info_5.text = "z: " + str(z)
+	info_6.text = "DASH TIMER " + str($"Node/Dodge Timer".time_left)
 
 
 func apply_shake():
@@ -148,12 +148,12 @@ func punch_attack():
 func floof_shadow(delta):
 	if z > 0:
 		shadow_floof_player.position.y += z_move * delta * 2
-		shadow_floof_player.scale *= Vector2(0.99,0.99) 
-		shadow_floof_player.modulate.a -= 0.01
+		#shadow_floof_player.scale *= Vector2(0.99,0.99) 
+		#shadow_floof_player.modulate.a -= 0.01
 		
 	else:
 		shadow_floof_player.position.y = Shadow_default_pos
-		shadow_floof_player.scale = Vector2(1,1)
+		#shadow_floof_player.scale = Vector2(1,1)
 		shadow_floof_player.modulate.a = 0.4
 
 func floof_Jump(delta):
@@ -212,6 +212,7 @@ func floof_Jump(delta):
 func movement(delta): #Redo of Floof_Jump()
 	direction = Input.get_vector("left","right","up","down")
 	velocity = direction * speed_calcu
+	
 	if Input.is_action_pressed("jump") and z == 0: #from Idle to Jump
 			z_move += 2000
 			z = z_move
@@ -221,18 +222,20 @@ func movement(delta): #Redo of Floof_Jump()
 		state_move = STATES2.JUMPING
 		z_move -= grav
 		z += z_move
+	if z <= 0:
+		z = 0 
+		z_move = 0
 	if state_move == STATES2.JUMPING and z == 0:
 		state_move = STATES2.IDLE
 	if state_move == STATES2.IDLE and z == 0: 
 		if direction != Vector2.ZERO: #from Idle to Walking
 			state_move = STATES2.WALKING
 			speed_calcu = speed_walk
-		if  Input.is_action_just_pressed("Dodge"):
+		if  Input.is_action_just_pressed("Dodge") and direction != Vector2.ZERO:
 			state_move = STATES2.DODGING
 	elif state_move == STATES2.WALKING and z == 0: # On Ground
 		if Input.is_action_pressed("run"): #from Walking to Sprinting
 			state_move = STATES2.SPRINTING
-			speed_calcu = speed_walk + speed_sprint
 		if  Input.is_action_just_pressed("Dodge"):
 			state_move = STATES2.DODGING
 		else:
@@ -242,23 +245,104 @@ func movement(delta): #Redo of Floof_Jump()
 	elif state_move == STATES2.SPRINTING and z == 0: # On Ground
 		if not Input.is_action_pressed("run"):#from Sprinting to Walking
 			state_move = STATES2.WALKING
-		if  Input.is_action_just_pressed("Dodge"):
+			speed_calcu = speed_walk
+		if  Input.is_action_just_pressed("Dodge")and z == 0:#from Sprinting to Dodging
 			state_move = STATES2.DODGING
-	elif state_move == STATES2.DODGING  and  $"Node/Dash Timer".is_stopped(): #On dodge enter
-		$"Node/Dash Timer".start(0.3) #From any State to Dodge
+		else:
+			speed_calcu = speed_sprint
+	elif state_move == STATES2.DODGING and $"Node/Dodge Timer".time_left <= 0: #On dodge enter
+		$"Node/Dodge Timer".start(0.3) #From any State to Dodge
 		speed_calcu = speed_dodge
-	elif state_move == STATES2.JUMPING: 
-		if  Input.is_action_just_pressed("Dodge"): #From Jump to Dodge
+	elif state_move == STATES2.JUMPING:
+		$"Node/Can Dive Timer".start(0.3)
+		if  Input.is_action_just_pressed("Dodge") and direction != Vector2.ZERO: #From Jump to Dodge
 			state_move = STATES2.DODGING
-		if Input.is_action_pressed("Dodge") and Input.is_action_pressed("down"):
+		#if $"Node/Can Dive Timer".time_left > 0:
+		if Input.is_action_pressed("Dodge") and Input.is_action_pressed("down") and $"Node/Can Dive Timer".time_left > 0:
 			state_move = STATES2.DIVING
+		
 	elif state_move == STATES2.DIVING: 
 		z_move -= 2000
+		if Input.is_action_just_released("Dodge"):
+			state_move = STATES2.IDLE
+			apply_shake()
 	velocity.y -= z_move
 	
-#if not Input.is_action_pressed("Dodge"):
-		#	state_move = STATES2.WALKING
-		#	z_move = 0
+
+func movement2(delta):
+	# Update direction and velocity
+	direction = Input.get_vector("left", "right", "up", "down")
+	velocity = direction * speed_calcu
+
+# Handle Jump Input
+	if Input.is_action_just_pressed("jump") and z == 0:
+		z_move = 2000
+		z = z_move
+
+# Gravity and Z movement
+	if z > 0:
+		z_move -= grav
+		z += z_move
+	else:
+		z_move = 0
+		z = 0
+
+# Finite State Machine
+	match state_move:
+		STATES2.IDLE:
+			if z > 0:
+				state_move = STATES2.JUMPING
+			elif direction != Vector2.ZERO:
+				state_move = STATES2.WALKING
+				speed_calcu = speed_walk
+			elif Input.is_action_just_pressed("Dodge") and direction != Vector2.ZERO:
+				state_move = STATES2.DODGING
+
+		STATES2.WALKING:
+			if z > 0:
+				state_move = STATES2.JUMPING
+			elif Input.is_action_pressed("run"):
+				state_move = STATES2.SPRINTING
+			elif direction == Vector2.ZERO:
+				state_move = STATES2.IDLE
+			elif Input.is_action_just_pressed("Dodge"):
+				state_move = STATES2.DODGING
+			speed_calcu = speed_walk
+
+		STATES2.SPRINTING:
+			if z > 0:
+				state_move = STATES2.JUMPING
+			elif not Input.is_action_pressed("run"):
+				state_move = STATES2.WALKING
+			elif Input.is_action_just_pressed("Dodge"):
+				state_move = STATES2.DODGING
+			speed_calcu = speed_sprint
+
+		STATES2.DODGING:
+			if $"Node/Dodge Timer".time_left <= 0:
+				$"Node/Dodge Timer".start(0.3)
+				speed_calcu = speed_dodge
+			if z > 0:
+				state_move = STATES2.JUMPING
+
+		STATES2.JUMPING:
+			if z <= 0:
+				state_move = STATES2.IDLE
+			else:
+				$"Node/Can Dive Timer".start(0.3)
+			if Input.is_action_just_pressed("Dodge") and direction != Vector2.ZERO:
+				state_move = STATES2.DODGING
+			elif Input.is_action_pressed("Dodge") and Input.is_action_pressed("down") and $"Node/Can Dive Timer".time_left > 0:
+				state_move = STATES2.DIVING
+		STATES2.DIVING:
+			z_move -= 2000
+			if Input.is_action_just_released("Dodge"):
+				state_move = STATES2.IDLE
+				apply_shake()
+
+# Apply vertical motion to velocity
+	velocity.y -= z_move
+
 func boiler():
 	match tracker_states:
 		STATES.JUMPING:
@@ -378,16 +462,19 @@ func _on_mele_combo_cooldown_timeout() -> void:
 	can_combo = false
 
 
-func _on_dash_timer_timeout() -> void:# On Dodge Exit
-	$"Node/Dash Timer".stop()
-	isDodging = false
-	speed_calcu = speed_walk
-	state_move = STATES2.IDLE
-	
-
-
 func _on_ground_slam_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		if body.is_in_group("Enemy"):
 			body.knockback = attack_direction * 1000
 			body.take_damage(attack_damage)
+
+
+func _on_can_dive_timer_timeout() -> void:
+	$"Node/Can Dive Timer".stop()
+
+
+func _on_dodge_timer_timeout() -> void:
+	$"Node/Dodge Timer".stop()
+	isDodging = false
+	speed_calcu = speed_walk
+	state_move = STATES2.IDLE

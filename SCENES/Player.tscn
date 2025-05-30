@@ -312,30 +312,57 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Player pos x" type="Label" parent="UI/Control"]
+[node name="Info 1" type="Label" parent="UI/Control"]
 layout_mode = 0
-offset_left = 1252.0
-offset_top = 483.0
-offset_right = 1457.0
-offset_bottom = 552.0
+offset_left = 323.0
+offset_top = 373.0
+offset_right = 528.0
+offset_bottom = 442.0
 theme_override_font_sizes/font_size = 50
 text = "Player x:"
 
-[node name="Player pos z" type="Label" parent="UI/Control"]
+[node name="Info 2" type="Label" parent="UI/Control"]
 layout_mode = 0
-offset_left = 1252.0
-offset_top = 611.0
-offset_right = 1457.0
-offset_bottom = 680.0
+offset_left = 323.0
+offset_top = 501.0
+offset_right = 528.0
+offset_bottom = 570.0
 theme_override_font_sizes/font_size = 50
 text = "Player z:"
 
-[node name="Player pos y" type="Label" parent="UI/Control"]
+[node name="Info 3" type="Label" parent="UI/Control"]
 layout_mode = 0
-offset_left = 1252.0
-offset_top = 545.0
-offset_right = 1457.0
-offset_bottom = 614.0
+offset_left = 323.0
+offset_top = 435.0
+offset_right = 528.0
+offset_bottom = 504.0
+theme_override_font_sizes/font_size = 50
+text = "Player y:"
+
+[node name="Info 4" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 559.0
+offset_right = 528.0
+offset_bottom = 628.0
+theme_override_font_sizes/font_size = 50
+text = "Player x:"
+
+[node name="Info 5" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 687.0
+offset_right = 528.0
+offset_bottom = 756.0
+theme_override_font_sizes/font_size = 50
+text = "Player z:"
+
+[node name="Info 6" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 621.0
+offset_right = 528.0
+offset_bottom = 690.0
 theme_override_font_sizes/font_size = 50
 text = "Player y:"
 
@@ -420,9 +447,11 @@ one_shot = true
 [node name="Mele Combo Cooldown" type="Timer" parent="Node"]
 one_shot = true
 
-[node name="Dash Timer" type="Timer" parent="Node"]
+[node name="Dodge Timer" type="Timer" parent="Node"]
 
 [node name="Dash Effect Timer" type="Timer" parent="Node"]
+
+[node name="Can Dive Timer" type="Timer" parent="Node"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -443,5 +472,6 @@ max_polyphony = 3
 [connection signal="area_entered" from="Magnet" to="." method="_on_magnet_area_entered"]
 [connection signal="timeout" from="Node/Mele Timer" to="." method="_on_mele_timer_timeout"]
 [connection signal="timeout" from="Node/Mele Combo Cooldown" to="." method="_on_mele_combo_cooldown_timeout"]
-[connection signal="timeout" from="Node/Dash Timer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Node/Dodge Timer" to="." method="_on_dodge_timer_timeout"]
 [connection signal="timeout" from="Node/Dash Effect Timer" to="." method="_on_dash_effect_timer_timeout"]
+[connection signal="timeout" from="Node/Can Dive Timer" to="." method="_on_can_dive_timer_timeout"]
